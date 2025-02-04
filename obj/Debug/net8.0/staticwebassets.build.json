@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "2XqlxOo5myaj0wms6QpMNrT9zxZ0vrkcwtz948y4i8Y=",
+  "Source": "UserApi",
+  "BasePath": "_content/UserApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "UserApi\\wwwroot",
+      "Source": "UserApi",
+      "ContentRoot": "C:\\Users\\hp\\UserApi\\wwwroot\\",
+      "BasePath": "_content/UserApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\56785976-eaf2-4706-bfe5-647354d48cb9.png",
+      "SourceId": "UserApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\hp\\UserApi\\wwwroot\\",
+      "BasePath": "_content/UserApi",
+      "RelativePath": "images/56785976-eaf2-4706-bfe5-647354d48cb9.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\56785976-eaf2-4706-bfe5-647354d48cb9.png"
+    },
+    {
+      "Identity": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\a142776a-39ce-4d67-b883-5226c3dbe62b.jpg",
+      "SourceId": "UserApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\hp\\UserApi\\wwwroot\\",
+      "BasePath": "_content/UserApi",
+      "RelativePath": "images/a142776a-39ce-4d67-b883-5226c3dbe62b.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\a142776a-39ce-4d67-b883-5226c3dbe62b.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\b87faa53-a191-4ec7-b547-55d2734812da.png",
+      "SourceId": "UserApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\hp\\UserApi\\wwwroot\\",
+      "BasePath": "_content/UserApi",
+      "RelativePath": "images/b87faa53-a191-4ec7-b547-55d2734812da.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\b87faa53-a191-4ec7-b547-55d2734812da.png"
+    }
+  ]
+}

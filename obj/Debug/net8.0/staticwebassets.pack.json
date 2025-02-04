@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\56785976-eaf2-4706-bfe5-647354d48cb9.png",
+      "PackagePath": "staticwebassets\\images\\56785976-eaf2-4706-bfe5-647354d48cb9.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\a142776a-39ce-4d67-b883-5226c3dbe62b.jpg",
+      "PackagePath": "staticwebassets\\images\\a142776a-39ce-4d67-b883-5226c3dbe62b.jpg"
+    },
+    {
+      "Id": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\b87faa53-a191-4ec7-b547-55d2734812da.png",
+      "PackagePath": "staticwebassets\\images\\b87faa53-a191-4ec7-b547-55d2734812da.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.UserApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.UserApi.props",
+      "PackagePath": "build\\UserApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.UserApi.props",
+      "PackagePath": "buildMultiTargeting\\UserApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.UserApi.props",
+      "PackagePath": "buildTransitive\\UserApi.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
