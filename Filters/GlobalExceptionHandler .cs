@@ -15,34 +15,30 @@ namespace UserApi.Filters
 
         public void OnException(ExceptionContext context)
         {
-            var result = new ObjectResult(new
-            {
-                Message = context.Exception.Message,
-                Type = context.Exception.GetType().Name,
-                context.Exception.StackTrace
-            });
+            var statusCode = StatusCodes.Status500InternalServerError;
+            var message = "An unexpected error occurred.";
 
-            switch (context.Exception)
+            if (context.Exception is UserApiException apiException)
             {
-                case UserApiException userApiEx:
-                    result.StatusCode = userApiEx.StatusCode;
-                    break;
-                case KeyNotFoundException:
-                    result.StatusCode = StatusCodes.Status404NotFound;
-                    break;
-                case ArgumentException:
-                    result.StatusCode = StatusCodes.Status400BadRequest;
-                    break;
-                case UnauthorizedAccessException:
-                    result.StatusCode = StatusCodes.Status401Unauthorized;
-                    break;
-                default:
-                    result.StatusCode = StatusCodes.Status500InternalServerError;
-                    break;
+                statusCode = apiException.StatusCode;
+                message = apiException.Message;
             }
 
-            _logger.LogError(context.Exception, "An error occurred while processing the request");
-            context.Result = result;
+            _logger.LogError(context.Exception,
+                "An error occurred: {Message}", message);
+
+            var errorResponse = new
+            {
+                Message = message,
+                Status = statusCode,
+                Timestamp = DateTime.UtcNow
+            };
+
+            context.Result = new ObjectResult(errorResponse)
+            {
+                StatusCode = statusCode
+            };
+
             context.ExceptionHandled = true;
         }
     }
