@@ -16,12 +16,11 @@ builder.Services.AddScoped<IUserService, UserService>();//or AddSingleton or Add
 //i used scoped since using transient would create multiple instances which is unnecessary in our case
 //singleton might be bit problematic due to simultaneous changes to the static list of users
 
-
 builder.Services.AddControllers(options =>
        {
            options.Filters.Add<GlobalExceptionHandler>();
        });
-
+builder.Services.AddSingleton<RequestLoggingMiddleware>();
 builder.Services.AddScoped<LoggingActionFilter>();
 builder.Services.AddScoped<IObjectMapperService, ObjectMapperService>();
 builder.Services.AddLogging(builder =>
