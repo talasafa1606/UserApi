@@ -1,65 +1,68 @@
-public class RequestLoggingMiddleware
+namespace UserApi.Middlewares
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<RequestLoggingMiddleware> _logger;
-
-    public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
+    public class RequestLoggingMiddleware
     {
-        _next = next;
-        _logger = logger;
-    }
+        private readonly RequestDelegate _next;
+        private readonly ILogger<RequestLoggingMiddleware> _logger;
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-        await LogRequest(context);
-
-        var originalBodyStream = context.Response.Body;
-        using var responseBody = new MemoryStream();
-        context.Response.Body = responseBody;
-        await _next(context);
-
-        await LogResponse(context, responseBody, originalBodyStream);
-    }
-
-    private async Task LogRequest(HttpContext context)
-    {
-        context.Request.EnableBuffering();
-
-        var requestBody = string.Empty;
-        using (var reader = new StreamReader(context.Request.Body, leaveOpen: true))
+        public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
         {
-            requestBody = await reader.ReadToEndAsync();
-            context.Request.Body.Position = 0;
+            _next = next;
+            _logger = logger;
         }
 
-        var logMessage = new
+        public async Task InvokeAsync(HttpContext context)
         {
-            Timestamp = DateTime.UtcNow,
-            Method = context.Request.Method,
-            Path = context.Request.Path,
-            QueryString = context.Request.QueryString.ToString(),
-            Headers = context.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()),
-            Body = requestBody
-        };
+            await LogRequest(context);
 
-        _logger.LogInformation("Request: {@LogMessage}", logMessage);
-    }
+            var originalBodyStream = context.Response.Body;
+            using var responseBody = new MemoryStream();
+            context.Response.Body = responseBody;
+            await _next(context);
 
-    private async Task LogResponse(HttpContext context, MemoryStream responseBody, Stream originalBodyStream)
-    {
-        responseBody.Position = 0;
-        var responseContent = await new StreamReader(responseBody).ReadToEndAsync();
-        responseBody.Position = 0;
+            await LogResponse(context, responseBody, originalBodyStream);
+        }
 
-        var logMessage = new
+        private async Task LogRequest(HttpContext context)
         {
-            Timestamp = DateTime.UtcNow,
-            StatusCode = context.Response.StatusCode,
-            Body = responseContent
-        };
+            context.Request.EnableBuffering();
 
-        _logger.LogInformation("Response: {@LogMessage}", logMessage);
+            var requestBody = string.Empty;
+            using (var reader = new StreamReader(context.Request.Body, leaveOpen: true))
+            {
+                requestBody = await reader.ReadToEndAsync();
+                context.Request.Body.Position = 0;
+            }
 
-        await responseBody.CopyToAsync(originalBodyStream);
+            var logMessage = new
+            {
+                Timestamp = DateTime.UtcNow,
+                Method = context.Request.Method,
+                Path = context.Request.Path,
+                QueryString = context.Request.QueryString.ToString(),
+                Headers = context.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()),
+                Body = requestBody
+            };
+
+            _logger.LogInformation("Request: {@LogMessage}", logMessage);
+        }
+
+        private async Task LogResponse(HttpContext context, MemoryStream responseBody, Stream originalBodyStream)
+        {
+            responseBody.Position = 0;
+            var responseContent = await new StreamReader(responseBody).ReadToEndAsync();
+            responseBody.Position = 0;
+
+            var logMessage = new
+            {
+                Timestamp = DateTime.UtcNow,
+                StatusCode = context.Response.StatusCode,
+                Body = responseContent
+            };
+
+            _logger.LogInformation("Response: {@LogMessage}", logMessage);
+
+            await responseBody.CopyToAsync(originalBodyStream);
+        }
     }
 }

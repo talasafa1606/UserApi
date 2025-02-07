@@ -1,4 +1,7 @@
-public interface IObjectMapperService
+namespace UserApi.Services
 {
-    TDestination Map<TSource, TDestination>(TSource source) where TDestination : new();
+    public interface IObjectMapperService
+    {
+        TDestination Map<TSource, TDestination>(TSource source) where TDestination : new();
+    }
 }

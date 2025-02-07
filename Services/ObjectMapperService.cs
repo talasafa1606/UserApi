@@ -15,7 +15,7 @@ namespace UserApi.Services
             try
             {
                 if (source == null)
-                    throw new ArgumentNullException(nameof(source));
+                    throw UserApiException.NotFound(nameof(source));
 
                 var destination = new TDestination();
                 var sourceProps = typeof(TSource).GetProperties();
@@ -51,7 +51,7 @@ namespace UserApi.Services
             {
                 _logger.LogError(ex, "Error mapping object from {SourceType} to {DestType}",
                     typeof(TSource).Name, typeof(TDestination).Name);
-                throw new UserApiException($"Error mapping object: {ex.Message}");
+                throw UserApiException.InternalServerError($"Error mapping object: {ex.Message}");
             }
         }
     }
