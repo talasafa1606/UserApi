@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using UserApi.Models;
+using UserApi.Services;
 
 namespace UserApi.Controllers
 {

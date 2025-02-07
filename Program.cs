@@ -1,4 +1,5 @@
 using UserApi.Filters;
+using UserApi.Middlewares;
 using UserApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
