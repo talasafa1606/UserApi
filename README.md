@@ -13,8 +13,9 @@ The following are a few screenshots of the Lab2 Functionality
       ![updatewithwrongEmail](https://github.com/user-attachments/assets/ced72f60-3a42-47ee-a941-55cc1c5042b6)
   7. Upload IMG Logging:
       ![uploadimg](https://github.com/user-attachments/assets/b61907f2-1503-4f3d-a706-56ca9ac0d639)
-     
-I created UserApiException to generate custom error messages and a GlobalExceptionHandler to catch and handle all exceptions consistently.
-LoggingActionFilter starts a stopwatch in OnActionExecuting and stops it in OnActionExecuted to measure execution time and log action details.
-Request Logging Middleware logs incoming requests before the action filter runs, and logs the response with the status code after.
-The Reflection happens when mapping Tsource to TDestination which can be seen in the 4th image. 
+
+
+  - I created UserApiException to generate custom error messages and a GlobalExceptionHandler to catch and handle all exceptions consistently.
+  - LoggingActionFilter starts a stopwatch in OnActionExecuting and stops it in OnActionExecuted to measure execution time and log action details.
+  - Request Logging Middleware logs incoming requests before the action filter runs, and logs the response with the status code after.
+  - The Reflection happens when mapping Tsource to TDestination which can be seen in the 4th image. 
