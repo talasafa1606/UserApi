@@ -1,4 +1,3 @@
-// 2. Request Logging Middleware
 public class RequestLoggingMiddleware
 {
     private readonly RequestDelegate _next;
