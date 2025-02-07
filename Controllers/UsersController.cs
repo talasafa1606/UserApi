@@ -6,128 +6,89 @@ namespace UserApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(LoggingActionFilter))]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UsersController> _logger;
+        private readonly IObjectMapperService _mapperService;
 
-        public UsersController(IUserService userService)
+
+        public UsersController(IUserService userService, ILogger<UsersController> logger, IObjectMapperService mapperService)
         {
             _userService = userService;
+            _mapperService = mapperService;
+            _logger = logger;
         }
 
         [HttpGet]
         public ActionResult<List<User>> GetAllUsers()
         {
+            _logger.LogInformation("Retrieving all users");
             return Ok(_userService.GetAllUsers());
         }
 
         [HttpGet("{id}")]
         public ActionResult<User> GetUserById(long id)
         {
-            try
-            {
-                var user = _userService.GetUserById(id);
-                return Ok(user);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _logger.LogInformation("Retrieving user with ID: {Id}", id);
+            var user = _userService.GetUserById(id);
+            return Ok(user);
         }
 
         [HttpGet("searchByName")]
         public ActionResult<List<User>> SearchUsersByName([FromQuery] string name)
         {
-            try
-            {
-                return Ok(_userService.SearchUsersByName(name));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _logger.LogInformation("Searching users by name: {Name}", name);
+            return Ok(_userService.SearchUsersByName(name));
         }
 
         [HttpGet("dateFormat")]
         public ActionResult<string> GetDateByLocale()
         {
-            try
-            {
-                var lang = Request.Headers["Accept-Language"].ToString();
-                return Ok(_userService.GetDateByLocale(lang));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var lang = Request.Headers["Accept-Language"].ToString();
+            _logger.LogInformation("Getting date format for language: {Language}", lang);
+            return Ok(_userService.GetDateByLocale(lang));
         }
 
         [HttpPost("updateUser")]
         public ActionResult<string> UpdateUser([FromBody] User updatedUser)
         {
-            try
-            {
-                return Ok(_userService.UpdateUser(updatedUser));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _logger.LogInformation("Updating user with ID: {Id}", updatedUser.Id);
+            return Ok(_userService.UpdateUser(updatedUser));
         }
+
         public class ImageUploadRequest
         {
             [Required]
             public required IFormFile Image { get; set; }
         }
+
         [HttpPost("uploadImage")]
         [Consumes("multipart/form-data")]
         public ActionResult<string> UploadImage([FromForm] ImageUploadRequest request)
         {
-            try
-            {
-                return Ok(_userService.UploadImage(request.Image));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+            _logger.LogInformation("Uploading image: {FileName}", request.Image.FileName);
+            return Ok(_userService.UploadImage(request.Image));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<string> DeleteUser(long id)
         {
-            try
-            {
-                return Ok(_userService.DeleteUser(id));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _logger.LogInformation("Deleting user with ID: {Id}", id);
+            return Ok(_userService.DeleteUser(id));
+        }
+
+          [HttpGet("student/{id}")]
+        public ActionResult<Student> GetStudentFromUser(long id)
+        {
+            var user = _userService.GetUserById(id);
+            var Student = _mapperService.Map<User, Student>(user);
+            return Ok(Student);
         }
     }
-
 }
+
 
 
 
