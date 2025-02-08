@@ -20,7 +20,6 @@ builder.Services.AddControllers(options =>
        {
            options.Filters.Add<GlobalExceptionHandler>();
        });
-builder.Services.AddSingleton<RequestLoggingMiddleware>();
 builder.Services.AddScoped<LoggingActionFilter>();
 builder.Services.AddScoped<IObjectMapperService, ObjectMapperService>();
 builder.Services.AddLogging(builder =>
