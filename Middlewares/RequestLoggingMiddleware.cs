@@ -1,24 +1,23 @@
 namespace UserApi.Middlewares
 {
-    public class RequestLoggingMiddleware
+    public class RequestLoggingMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly ILogger<RequestLoggingMiddleware> _logger;
 
-        public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
+        public RequestLoggingMiddleware(ILogger<RequestLoggingMiddleware> logger)
         {
-            _next = next;
             _logger = logger;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             await LogRequest(context);
 
             var originalBodyStream = context.Response.Body;
             using var responseBody = new MemoryStream();
             context.Response.Body = responseBody;
-            await _next(context);
+
+            await next(context);
 
             await LogResponse(context, responseBody, originalBodyStream);
         }
