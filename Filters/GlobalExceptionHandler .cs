@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using UserApi.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace UserApi.Filters
 {
-    public class GlobalExceptionHandler : IExceptionFilter
+    public class GlobalExceptionHandler : IExceptionHandler
     {
         private readonly ILogger<GlobalExceptionHandler> _logger;
 
@@ -13,18 +13,22 @@ namespace UserApi.Filters
             _logger = logger;
         }
 
-        public void OnException(ExceptionContext context)
+        public async ValueTask<bool> TryHandleAsync(
+            HttpContext httpContext,
+            Exception exception,
+            CancellationToken cancellationToken)
         {
-            var statusCode = StatusCodes.Status500InternalServerError;
-            var message = "An unexpected error occurred.";
-
-            if (context.Exception is UserApiException apiException)
+            var (statusCode, message) = exception switch
             {
-                statusCode = apiException.StatusCode;
-                message = apiException.Message;
-            }
+                ArgumentException => (StatusCodes.Status400BadRequest, "Invalid argument provided."),
+                InvalidOperationException => (StatusCodes.Status400BadRequest, "Invalid operation attempted."),
+                KeyNotFoundException => (StatusCodes.Status404NotFound, "Requested resource not found."),
+                UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Unauthorized access."),
+                NotImplementedException => (StatusCodes.Status501NotImplemented, "This functionality is not implemented."),
+                _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
+            };
 
-            _logger.LogError(context.Exception,
+            _logger.LogError(exception,
                 "An error occurred: {Message}", message);
 
             var errorResponse = new
@@ -34,12 +38,12 @@ namespace UserApi.Filters
                 Timestamp = DateTime.UtcNow
             };
 
-            context.Result = new ObjectResult(errorResponse)
-            {
-                StatusCode = statusCode
-            };
+            httpContext.Response.StatusCode = statusCode;
+            httpContext.Response.ContentType = "application/json";
 
-            context.ExceptionHandled = true;
+            await httpContext.Response.WriteAsJsonAsync(errorResponse, cancellationToken);
+
+            return true;
         }
     }
 }

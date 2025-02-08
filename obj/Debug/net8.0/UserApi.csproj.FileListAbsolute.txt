@@ -1,3 +1,11 @@
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.csproj.AssemblyReference.cache
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.AssemblyInfoInputs.cache
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.AssemblyInfo.cs
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.csproj.CoreCompileInputs.cache
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.sourcelink.json
 C:\Users\hp\UserApi\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\hp\UserApi\bin\Debug\net8.0\appsettings.json
 C:\Users\hp\UserApi\bin\Debug\net8.0\UserApi.staticwebassets.runtime.json
@@ -11,14 +19,6 @@ C:\Users\hp\UserApi\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\hp\UserApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\hp\UserApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\hp\UserApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.csproj.AssemblyReference.cache
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.AssemblyInfoInputs.cache
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.AssemblyInfo.cs
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.csproj.CoreCompileInputs.cache
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\hp\UserApi\obj\Debug\net8.0\UserApi.sourcelink.json
 C:\Users\hp\UserApi\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\hp\UserApi\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\hp\UserApi\obj\Debug\net8.0\staticwebassets\msbuild.UserApi.Microsoft.AspNetCore.StaticWebAssets.props

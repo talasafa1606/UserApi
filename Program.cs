@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>(); 
-    options.Filters.Add<GlobalExceptionHandler>(); 
 });
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -36,6 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseExceptionHandler();
 
 app.UseMiddleware<RequestLoggingMiddleware>();
 

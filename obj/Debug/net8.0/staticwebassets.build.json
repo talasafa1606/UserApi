@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hXCVqS6/wfIZk9/JA9JJZVMXw+FhX3+ya9Qt9liCX8k=",
+  "Hash": "hyaoUZaOss3z8OASDz3NGS0bMY5GajigtY+6TrOFKXY=",
   "Source": "UserApi",
   "BasePath": "_content/UserApi",
   "Mode": "Default",
@@ -34,6 +34,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\56785976-eaf2-4706-bfe5-647354d48cb9.png"
+    },
+    {
+      "Identity": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\790d1505-ce62-41a8-a289-f9592a424944.png",
+      "SourceId": "UserApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\hp\\UserApi\\wwwroot\\",
+      "BasePath": "_content/UserApi",
+      "RelativePath": "images/790d1505-ce62-41a8-a289-f9592a424944.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\790d1505-ce62-41a8-a289-f9592a424944.png"
     },
     {
       "Identity": "C:\\Users\\hp\\UserApi\\wwwroot\\images\\85186239-4903-4e3b-8d05-d8c9611b90fd.png",

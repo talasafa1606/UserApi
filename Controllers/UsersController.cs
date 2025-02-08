@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using UserApi.Exceptions;
 using UserApi.Models;
 using UserApi.Services;
 
@@ -23,69 +24,185 @@ namespace UserApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<User>> GetAllUsers()
+        [HttpGet]
+        public IActionResult GetAllUsers()
         {
-            _logger.LogInformation("Retrieving all users");
-            return Ok(_userService.GetAllUsers());
+            try
+            {
+                _logger.LogInformation("Retrieving all users");
+                var users = _userService.GetAllUsers();
+                if (users == null || users.Count == 0)
+                {
+                    return NotFound("No users found");
+                }
+                return Ok(users);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while retrieving users");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetUserById(long id)
+        public IActionResult GetUserById(long id)
         {
-            _logger.LogInformation("Retrieving user with ID: {Id}", id);
-            var user = _userService.GetUserById(id);
-            return Ok(user);
+            try
+            {
+                _logger.LogInformation("Retrieving user with ID: {Id}", id);
+                var user = _userService.GetUserById(id);
+                if (user == null)
+                {
+                    return NotFound($"User with ID {id} not found");
+                }
+                return Ok(user);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while retrieving user by ID");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
 
         [HttpGet("searchByName")]
-        public ActionResult<List<User>> SearchUsersByName([FromQuery] string name)
+        public IActionResult SearchUsersByName([FromQuery] string name)
         {
-            _logger.LogInformation("Searching users by name: {Name}", name);
-            return Ok(_userService.SearchUsersByName(name));
+            try
+            {
+                _logger.LogInformation("Searching users by name: {Name}", name);
+                var users = _userService.SearchUsersByName(name);
+                if (users == null || users.Count == 0)
+                {
+                    return NotFound($"No users found with the name '{name}'");
+                }
+                return Ok(users);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while searching users by name");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
-
-        [HttpGet("dateFormat")]
+        [HttpGet("get-date")]
         public ActionResult<string> GetDateByLocale()
         {
             var lang = Request.Headers["Accept-Language"].ToString();
-            _logger.LogInformation("Getting date format for language: {Language}", lang);
-            return Ok(_userService.GetDateByLocale(lang));
+            try
+            {
+                var date = _userService.GetDateByLocale(lang);
+                return Ok(date);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
 
         [HttpPost("updateUser")]
-        public ActionResult<string> UpdateUser([FromBody] User updatedUser)
+        public IActionResult UpdateUser([FromBody] User updatedUser)
         {
-            _logger.LogInformation("Updating user with ID: {Id}", updatedUser.Id);
-            return Ok(_userService.UpdateUser(updatedUser));
+            try
+            {
+                _logger.LogInformation("Updating user with ID: {Id}", updatedUser.Id);
+                var result = _userService.UpdateUser(updatedUser);
+                return Ok(result);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while updating the user");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
 
         public class ImageUploadRequest
         {
             [Required]
-            public required IFormFile Image { get; set; }
+            public IFormFile Image { get; set; }
         }
 
         [HttpPost("uploadImage")]
         [Consumes("multipart/form-data")]
-        public ActionResult<string> UploadImage([FromForm] ImageUploadRequest request)
+        public IActionResult UploadImage([FromForm] ImageUploadRequest request)
         {
-            _logger.LogInformation("Uploading image: {FileName}", request.Image.FileName);
-            return Ok(_userService.UploadImage(request.Image));
+            try
+            {
+                _logger.LogInformation("Uploading image: {FileName}", request.Image.FileName);
+                var result = _userService.UploadImage(request.Image);
+                return Ok(result);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while uploading the image");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<string> DeleteUser(long id)
+        public IActionResult DeleteUser(long id)
         {
-            _logger.LogInformation("Deleting user with ID: {Id}", id);
-            return Ok(_userService.DeleteUser(id));
+            try
+            {
+                _logger.LogInformation("Deleting user with ID: {Id}", id);
+                var result = _userService.DeleteUser(id);
+                return Ok(result);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while deleting the user");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
 
-          [HttpGet("student/{id}")]
-        public ActionResult<Student> GetStudentFromUser(long id)
+        [HttpGet("student/{id}")]
+        public IActionResult GetStudentFromUser(long id)
         {
-            var user = _userService.GetUserById(id);
-            var Student = _mapperService.Map<User, Student>(user);
-            return Ok(Student);
+            try
+            {
+                var user = _userService.GetUserById(id);
+                if (user == null)
+                {
+                    return NotFound($"User with ID {id} not found");
+                }
+                var student = _mapperService.Map<User, Student>(user);
+                return Ok(student);
+            }
+            catch (UserApiException ex)
+            {
+                return StatusCode(ex.StatusCode, new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while retrieving student data");
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
         }
     }
 }

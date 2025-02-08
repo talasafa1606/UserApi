@@ -51,7 +51,7 @@ namespace UserApi.Services
             {
                 _logger.LogError(ex, "Error mapping object from {SourceType} to {DestType}",
                     typeof(TSource).Name, typeof(TDestination).Name);
-                throw UserApiException.InternalServerError($"Error mapping object: {ex.Message}");
+                throw new InvalidOperationException($"Error mapping object: {ex.Message}", ex);
             }
         }
     }
